@@ -18,14 +18,25 @@ export async function getDexPrice(symbol: string): Promise<number> {
   }
 
   export async function getCexPrice(symbol: string): Promise<{ binance?: number; okx?: number }> {
-    const result: any = {};
-    // // Binance
-    // const binance = new ccxt.binance(CEX_API.binance);
-    // const tickerB = await binance.fetchTicker(`${symbol}/USDT`);
-    // result.binance = tickerB.last;
-    // OKEx
-    const okx = new ccxt.okx(CEX_API.okx);
-    const tickerO = await okx.fetchTicker(`${symbol}/USDT`);
-    result.okx = tickerO.last;
+    const result: { binance?: number; okx?: number } = {};
+    
+    try {
+      // Binance
+      const binance = new ccxt.binance(CEX_API.binance);
+      const tickerB = await binance.fetchTicker(`${symbol}/USDT`);
+      result.binance = tickerB.last;
+    } catch (error) {
+      console.error('获取Binance价格失败:', error);
+    }
+    
+    try {
+      // OKX
+      const okx = new ccxt.okx(CEX_API.okx);
+      const tickerO = await okx.fetchTicker(`${symbol}/USDT`);
+      result.okx = tickerO.last;
+    } catch (error) {
+      console.error('获取OKX价格失败:', error);
+    }
+    
     return result;
   }

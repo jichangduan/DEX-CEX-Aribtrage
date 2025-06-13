@@ -10,7 +10,7 @@ export interface TokenConfig {
     token0Decimals: number;
     token1Decimals: number;
   };
-  cex: Array< 'okx'>;
+  cex: Array<'okx' | 'binance'>;
 }
 
 export const TOKENS: TokenConfig[] = [
@@ -22,7 +22,7 @@ export const TOKENS: TokenConfig[] = [
       token0Decimals: 18,             // CRV 通常是 18
       token1Decimals: 6               // USDT 通常是 6
     },
-    cex: ['okx']
+    cex: ['okx', 'binance']
   }
 ];
 
